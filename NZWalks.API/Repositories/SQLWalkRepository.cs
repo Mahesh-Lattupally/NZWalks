@@ -24,17 +24,18 @@ namespace NZWalks.API.Repositories
         {
             var walks = dbContext.Walks.Include("Difficulty").Include("Region").AsQueryable();
 
+            // Filtering
             if (!string.IsNullOrWhiteSpace(filterOn) && !string.IsNullOrWhiteSpace(filterQuery)) 
             {
                 if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase)) 
                 {
                     walks = walks.Where(x => x.Name.Contains(filterQuery));
                 }
-                if (filterOn.Equals("Description", StringComparison.OrdinalIgnoreCase))
+                else if (filterOn.Equals("Description", StringComparison.OrdinalIgnoreCase))
                 {
                     walks = walks.Where(x => x.Description.Contains(filterQuery));
                 }
-                if (filterOn.Equals("LengthInKm", StringComparison.OrdinalIgnoreCase))
+                else if (filterOn.Equals("LengthInKm", StringComparison.OrdinalIgnoreCase))
                 {
                     walks = walks.Where(x => x.LengthInKm == Convert.ToDouble(filterQuery));
                 }
