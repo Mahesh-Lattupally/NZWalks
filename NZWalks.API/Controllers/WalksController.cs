@@ -42,12 +42,23 @@ namespace NZWalks.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool? isAscending, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
         {
-            var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize);
+            try
+            {
+                var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize);
 
-            // Map Domain model to DTO
-            var walksDto = mapper.Map<List<WalkDto>>(walksDomainModel);
+                // Map Domain model to DTO
+                var walksDto = mapper.Map<List<WalkDto>>(walksDomainModel);
 
-            return Ok(walksDto);
+                return Ok(walksDto);
+            }
+            catch (Exception)
+            {
+                // To Log the Exception using Global Exception Handling
+                //throw new Exception("This is a new Exception");
+
+                // Log this Exception
+                throw;
+            }
         }
 
         // GET Walk by id
