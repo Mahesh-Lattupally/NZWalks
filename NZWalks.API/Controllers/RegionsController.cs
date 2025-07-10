@@ -39,12 +39,9 @@ namespace NZWalks.API.Controllers
         {
             try 
             {
-                throw new Exception("This is a custom exception");
-
                 // Get Data from Database - Domain models
                 var regions = await regionRepository.GetAllAsync();
-
-                logger.LogInformation($"Finished GetAllRegions request with data : {JsonSerializer.Serialize(regions)}");
+                //logger.LogInformation($"Finished GetAllRegions request with data : {JsonSerializer.Serialize(regions)}");
 
                 // Map Domain Models to DTOs
                 var regionsDto = mapper.Map<List<RegionDto>>(regions);
